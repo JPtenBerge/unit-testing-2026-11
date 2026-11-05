@@ -30,7 +30,6 @@ public class CalculatorTests
 		_sut = new Calculator(); // system under test
 	}
 
-	// edge cases - BICEP + the line
 	[TestMethod]
 	[DataRow(4, 8, 12)]
 	[DataRow(-4, 8, 4)]
@@ -44,15 +43,6 @@ public class CalculatorTests
 
 		// Assert - verify / then (1 - 10 lines)
 		Assert.AreEqual(expected, result);
-
-		result.Should().Be(expected);
-
-		var someObj = new { Age = 24 };
-		var otherObj = new { Age = 24, Name = "JP" };
-		someObj.Should().BeEquivalentTo(otherObj, opts => opts.Excluding(x => x.Name));
-		// collections / objects
-
-
 		Console.WriteLine($"magic number is now {Calculator.MagicNumber}");
 	}
 }
