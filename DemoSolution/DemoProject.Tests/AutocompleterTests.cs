@@ -1,4 +1,5 @@
 using AwesomeAssertions;
+using Moq;
 
 namespace DemoProject.Tests;
 
@@ -13,7 +14,7 @@ public class AutocompleterTests
 {
 	private Autocompleter<Car> _sut = null!;
 	private List<Car> _cars = null!;
-	private FakeNavigateService _navigateServiceMock = null!;
+	private Mock<INavigateService> _navigateServiceMock = null!;
 		
 	public AutocompleterTests()
 	{
@@ -26,10 +27,17 @@ public class AutocompleterTests
 			new() { Make = "Fiat", Model = "500" },
 			new() { Make = "Ferrari", Model = "Testarossa" },
 		];
-		_navigateServiceMock = new FakeNavigateService(); // use mocking framework
-		_sut = new(_navigateServiceMock);
+		_navigateServiceMock = new Mock<INavigateService>();
+		
+		_sut = new(_navigateServiceMock.Object);
 		_sut.Data = _cars;
 	}
+
+	// [TestCleanup]
+	// public void Cleanup()
+	// {
+	// 	_navigateServiceMock.VerifyAll();
+	// }
 
 	[TestMethod]
 	public void Autocomplete_BasicAutocomplete_GiveSuggestions()
@@ -89,12 +97,13 @@ public class AutocompleterTests
 		// Arrange
 		_sut.Query = "i";
 		_sut.Autocomplete();
+		_navigateServiceMock.Setup(x => x.Next(It.IsAny<List<Car>>(), It.IsAny<int?>())).Returns(42);
 	
 		// Act
 		_sut.Next();
 	
 		// Assert
-		_navigateServiceMock.HasNextBeenCalled.Should().BeTrue();
+		_navigateServiceMock.Verify(x => x.Next(It.IsAny<List<Car>>(), It.IsAny<int?>()), Times.Once);
 		_sut.ActiveSuggestionIndex.Should().Be(42);
 	}
 	
@@ -106,6 +115,6 @@ public class AutocompleterTests
 
 		// Assert
 		_sut.ActiveSuggestionIndex.Should().BeNull();
-		_navigateServiceMock.HasNextBeenCalled.Should().BeFalse();
+		_navigateServiceMock.Verify(x => x.Next(It.IsAny<List<Car>>(), It.IsAny<int?>()), Times.Never);
 	}
 }

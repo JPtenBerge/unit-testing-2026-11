@@ -9,6 +9,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="AwesomeAssertions" Version="9.6.0" />
+		<PackageReference Include="Moq" Version="4.21.0" />
 		<PackageReference Include="MSTest" Version="4.0.2"/>
 	</ItemGroup>
 

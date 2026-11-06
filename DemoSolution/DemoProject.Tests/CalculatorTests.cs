@@ -38,7 +38,7 @@ public class CalculatorTests
 	public void Add_DifferentNumberInputs_Adds(int a, int b, int expected)
 	{
 		// Act - do / when  - 1 or 2 lines
-		Thread.Sleep(Random.Shared.Next(1, 10) * 1000);
+		// Thread.Sleep(Random.Shared.Next(1, 10) * 1000);
 		var result = _sut.Add(a, b);
 
 		// Assert - verify / then (1 - 10 lines)
