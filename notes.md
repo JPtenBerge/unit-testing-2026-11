@@ -7,17 +7,15 @@ Right BICEP can help determine what to test:
 - Right - are the results right?
 - Boundary - int.maxValue
 - Inverse something - `GetMaleEmployees()` - `GetAllEmployees()` - `GetFemaleEmployees()`
-- Cross-check results - 
+- Cross-check results -
 - Error conditions - `someService.GetMagicNumber()`
 - Performance
-
 
 ## Black box vs white box testing
 
 - black box: no idea what's happening inside
   - preferred
 - white box: transparent, you have knowledge of its internals
-
 
 ## What is a unit?
 
@@ -31,10 +29,6 @@ Right BICEP can help determine what to test:
 - `return calcService.Add(4, 8);` - call method on dependency injected service
 - `return CallWebserverInSweden(4, 8);` - integration
 - `return AskChatGpt(4, 8);` - integration
-
-
-
-
 
 ## constructor vs `Init()` with `[TestInitialize]`
 
@@ -51,6 +45,7 @@ Right BICEP can help determine what to test:
 
 - .NET Core 1.0 didn't support MSTest, xUnit gained a lot of popularity at that time
 - MSTest [used to only have `\[DataSource\]` for data-driven tests](https://learn.microsoft.com/en-us/visualstudio/test/how-to-create-a-data-driven-unit-test?view=visualstudio):
+
   ```cs
   [TestMethod]
   [DataSource(@"Provider=Microsoft.SqlServerCe.Client.4.0; Data Source=C:\Data\MathsData.sdf;", "Numbers")]
@@ -66,7 +61,9 @@ Right BICEP can help determine what to test:
       Assert.AreEqual(expected, actual, "x:<{0}> y:<{1}>", new object[] {x, y});
   }
   ```
+
   xUnit/NUnit both had easier approaches with `[InlineData()]` and `[TestCase()]`. MSTest later introduced `[DataRow]`
+
 - they've all grown a lot closer!
 
 ## When tests are less valuable / when not to write tests
@@ -88,8 +85,6 @@ Right BICEP can help determine what to test:
 
 Repeat. Shorthand: red-green-refactor.
 
-
-
 ## Concept of mocking
 
 What do I want to mock? "external resources"
@@ -103,7 +98,6 @@ But also:
 Everything not my class.
 
 - All dependencies
-
 
 Dependency injection is often seen in combination with mocking:
 
@@ -125,22 +119,34 @@ Dependency injection is often seen in combination with mocking:
     MoreService _moreService = inject<MoreService>();
     ```
 
+## Mock frameworks
 
+- Moq
+  - most popular
+- NSubstitute
+- FakeItEasy
 
+## Mutation testing
 
+a tool that automates the changing of your code ("mutating") and running all your tests
 
+- introducing bugs in your code to see if your tests fail
+- tests should fail
+- "testing your tests"
+- Stryker
 
+```cs
+// production code
+if (number > 14)
+{
+	// ...
+}
 
-
-
-
-
-
-
-
-
-
-
+// mutants
+if (number < 14) { } // run all tests    KILLED
+if (number == 14) { }  // run all tests  KILLED
+if (number > 4000) { }  // run all tests  KILLED
+```
 
 ## Various
 
