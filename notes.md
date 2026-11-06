@@ -160,3 +160,4 @@ Dependency injection is often seen in combination with mocking:
     ```
 - [The Turkey test](https://stackoverflow.com/questions/796986/what-is-the-turkey-test) and why `.ToUpper()` isn't the best option for case-insensitive string comparisons
 - [Best moment of TaskMaster](https://www.youtube.com/watch?v=_UgSDcHPgCc)
+  - Another favorite: [Open the Briefcase](https://www.youtube.com/watch?v=5UapTuq7e90)
